@@ -59,6 +59,34 @@ You should now be able to SSH into the Pi without a password: `ssh pi@192.168.12
 
 ### Prerequisites
 
-You must have `git` installed on your pi. You can install it with `sudo apt-get install git -y`
+You must have `git` installed on your pi. You can install it with
 
-Clone this repository in your home directory
+    sudo apt-get install git -y
+
+Clone this repository into your home directory
+
+    git clone https://github.com/mcfadden/PiSetup.git ~/PiSetup
+
+
+Pick a script, and run it. At this time, these scripts are available:
+
+- [ruby](#ruby)
+
+To run an install script:
+
+    ~/PiSetup/scripts/<script>.sh
+    # Example
+    ~/PiSetup/scripts/ruby.sh
+
+
+## Scripts
+
+### Ruby
+
+**`ruby.sh`**
+
+This ruby install script installs `ruby-build` and `ruby`. It will install ruby to `/usr/bin/ruby` so it will become the system ruby install.
+
+It detects available versions provided by `ruby-build` and defaults to the latests stable build. You will be prompted to select a version.
+
+It disables RDoc for the ruby install, and globally disables docs for gem installation as well.
