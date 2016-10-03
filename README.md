@@ -85,7 +85,7 @@ To run an install script:
 
 **`ruby.sh`**
 
-This ruby install script installs `ruby-build` and `ruby`. It will install ruby to `/usr/bin/ruby` so it will become the system ruby install.
+This ruby install script installs `ruby-build` and `ruby`. It will install ruby to `/usr/local` and become your system ruby.
 
 It detects available versions provided by `ruby-build` and defaults to the latests stable build. You will be prompted to select a version.
 

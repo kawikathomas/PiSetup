@@ -8,8 +8,7 @@ fi
 bold=$(tput bold)
 normal=$(tput sgr0)
 
-echo "This will install ruby-build and ruby."
-echo "${bold}Ruby will be installed to /usr/bin/ruby${normal}"
+echo "This will install ruby-build and ruby. ${bold}This will become your system version of ruby${normal}"
 
 read -p "Do you wish to proceed? (y/n) " continue
 if [[ $continue != "y" ]]; then
@@ -40,7 +39,7 @@ if [[ $installVersion == "" ]]; then installVersion=${lastVersion}; fi;
 echo "Installing Ruby Version: ${installVersion}"
 
 # bye bye RDoc
-CONFIGURE_OPTS="--disable-install-doc --enable-shared" ruby-build --verbose ${installVersion} /usr/bin/ruby
+CONFIGURE_OPTS="--disable-install-doc --enable-shared" ruby-build --verbose ${installVersion} /usr/local
 # No docs for gems either
 echo "gem: --no-document" > ~/.gemrc
 
