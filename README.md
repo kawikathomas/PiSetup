@@ -1,5 +1,7 @@
 # Raspberry Pi Setup
 
+This is a collection of scripts I use to set up a Raspberry Pi. I primarily use them to run Ruby on Rails applications, so the current collection of scripts is focused on that. However, I have tried to avoid boxing myself into that, and would like to keep the install scripts as generic as possible.
+
 ## Preparation
 
 This section covers the basics of getting your Pi up and running. It's mostly in place for my own documentation.
@@ -71,6 +73,7 @@ Clone this repository into your home directory
 Pick a script, and run it. At this time, these scripts are available:
 
 - [ruby](#ruby)
+- [PostgreSQL](#postgresql)
 
 To run an install script:
 
@@ -90,3 +93,15 @@ This ruby install script installs `ruby-build` and `ruby`. It will install ruby 
 It detects available versions provided by `ruby-build` and defaults to the latests stable build. You will be prompted to select a version.
 
 It disables RDoc for the ruby install, and globally disables docs for gem installation as well.
+
+### PostgreSQL
+
+**`psql.sh`**
+
+This PostgreSQL install script installs `postgres-9.4` and performs a few configuration changes.
+
+It changes the authentication method from `peer` to `md5` which simplifies connecting via a rails app.
+
+It creates a user `rails` with password `rails`. Since we won't allow access to the database except via `localhost` this is safe enough.
+
+It also creates a user `root` with no password. You can set up a password for this user if you desire.
