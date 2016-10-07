@@ -75,6 +75,7 @@ Pick a script, and run it. At this time, these scripts are available:
 - [ruby](#ruby)
 - [PostgreSQL](#postgresql)
 - [NGINX](#nginx)
+- [Upstart](#upstart)
 - [wiringPi](#wiringpi)
 
 To run an install script:
@@ -113,6 +114,13 @@ It also creates a user `root` with no password. You can set up a password for th
 **`nginx.sh`**
 
 Installs and starts NGINX. You will need to configure it for your needs.
+
+
+### Upstart
+
+**`upstart.sh`**
+
+Installs Upstart. You will need to reboot for Upstart to take effect.
 
 ### WiringPi
 
