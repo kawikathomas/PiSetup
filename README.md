@@ -74,6 +74,7 @@ Pick a script, and run it. At this time, these scripts are available:
 
 - [ruby](#ruby)
 - [PostgreSQL](#postgresql)
+- [wiringPi](#pwiringpi)
 
 To run an install script:
 
@@ -105,3 +106,11 @@ It changes the authentication method from `peer` to `md5` which simplifies conne
 It creates a user `rails` with password `rails`. Since we won't allow access to the database except via `localhost` this is safe enough.
 
 It also creates a user `root` with no password. You can set up a password for this user if you desire.
+
+### WiringPi
+
+**`wiringPi.sh`**
+
+[WiringPi](http://wiringpi.com) is a GPIO access library for the Raspberry Pi. It includes a command line utility `gpio`.
+
+See [http://wiringpi.com](http://wiringpi.com) for usage instructions.
