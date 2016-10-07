@@ -74,7 +74,8 @@ Pick a script, and run it. At this time, these scripts are available:
 
 - [ruby](#ruby)
 - [PostgreSQL](#postgresql)
-- [wiringPi](#pwiringpi)
+- [NGINX](#nginx)
+- [wiringPi](#wiringpi)
 
 To run an install script:
 
@@ -106,6 +107,12 @@ It changes the authentication method from `peer` to `md5` which simplifies conne
 It creates a user `rails` with password `rails`. Since we won't allow access to the database except via `localhost` this is safe enough.
 
 It also creates a user `root` with no password. You can set up a password for this user if you desire.
+
+### NGINX
+
+**`nginx.sh`**
+
+Installs and starts NGINX. You will need to configure it for your needs.
 
 ### WiringPi
 
