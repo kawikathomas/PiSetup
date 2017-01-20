@@ -129,3 +129,11 @@ Installs Upstart. You will need to reboot for Upstart to take effect.
 [WiringPi](http://wiringpi.com) is a GPIO access library for the Raspberry Pi. It includes a command line utility `gpio`.
 
 See [http://wiringpi.com](http://wiringpi.com) for usage instructions.
+
+
+
+
+# Notes to myself
+
+- you need to add a file called `ssh` to the boot partition to enable ssh for a headless setup
+- upstart workers specify an environment of production in them
