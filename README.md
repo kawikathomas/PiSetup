@@ -28,8 +28,9 @@ These instructions are for macOS. Installation instructions are available [on th
 6. `sudo dd bs=1m if=2016-09-23-raspbian-jessie-lite.img of=/dev/rdisk5`
 7. Enter your password when prompted (due to the `sudo`)
 8. Wait - It took 1 minute and 19 seconds for me.
-9. `diskutil eject /dev/disk5`
-10. Remove your SD Card from you laptop and insert in your Raspberry Pi
+9. Add an empty file named 'ssh' to the boot partition: `touch /Volumes/boot/ssh`
+10. `diskutil eject /dev/disk5`
+11. Remove your SD Card from you laptop and insert in your Raspberry Pi
 
 ### Update and Configure Pi
 
@@ -129,11 +130,3 @@ Installs Upstart. You will need to reboot for Upstart to take effect.
 [WiringPi](http://wiringpi.com) is a GPIO access library for the Raspberry Pi. It includes a command line utility `gpio`.
 
 See [http://wiringpi.com](http://wiringpi.com) for usage instructions.
-
-
-
-
-# Notes to myself
-
-- you need to add a file called `ssh` to the boot partition to enable ssh for a headless setup
-- upstart workers specify an environment of production in them

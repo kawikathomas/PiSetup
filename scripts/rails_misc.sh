@@ -14,6 +14,13 @@ appName=$(whiptail --title "PiSetup" --inputbox "What is the name of your Rails 
 # sed converts CamelCase into snake_case. Then we convert any spaces into _.    Here we're dowcasing     and finally removing any characters we don't want. Then last we remove duplicate underscores.
 safeAppName=$(echo $appName | sed 's/\([a-z0-9]\)\([A-Z]\)/\1_\L\2/g' | tr -s [:space:] '_' | tr [:upper:] [:lower:] | tr -d -c '[:alnum:]_' | tr -s _ )
 
+railsEnv=$(whiptail --title "PiSetup" --notags --menu "What RAILS_ENV and RACK_ENV?" 20 60 4 production "production" staging "Staging" development "development" 3>&1 1>&2 2>&3)
+
+if [[ $railsEnv != "" ]]; then
+  echo "RAILS_ENV=$railsEnv" | sudo tee -a /etc/environment
+  echo "RACK_ENV=$railsEnv" | sudo tee -a /etc/environment
+fi
+
 # Create the directory structure for the app:
 # /www/safeAppName/current
 sudo mkdir /www
@@ -42,16 +49,16 @@ if which initctl > /dev/null; then
   for choice in $upstartChoices; do
     if [[ $choice = "sidekiq" ]]; then
       echo "Setting up sidekiq Upstart script"
-      sed -e "s/<<safeAppName>>/$safeAppName/g" ../templates/upstart/sidekiq.conf > /etc/init/sidekiq.conf
+      sed -e "s/<<safeAppName>>/$safeAppName/g;s/<<environment>>/$railsEnv/g" ../templates/upstart/sidekiq.conf > /etc/init/sidekiq.conf
     elif [[ $choice = "clockwork" ]]; then
       echo "Setting up clockwork Upstart script"
-      sed -e "s/<<safeAppName>>/$safeAppName/g" ../templates/upstart/clockwork.conf > /etc/init/clockwork.conf
+      sed -e "s/<<safeAppName>>/$safeAppName/g;s/<<environment>>/$railsEnv/g" ../templates/upstart/clockwork.conf > /etc/init/clockwork.conf
     elif [[ $choice = "puma" ]]; then
       echo "Setting up puma Upstart script"
-      sed -e "s/<<safeAppName>>/$safeAppName/g" ../templates/upstart/puma.conf > /etc/init/puma.conf
+      sed -e "s/<<safeAppName>>/$safeAppName/g;s/<<environment>>/$railsEnv/g" ../templates/upstart/puma.conf > /etc/init/puma.conf
     elif [[ $choice = "unicorn" ]]; then
       echo "Setting up unicorn Upstart script"
-      sed -e "s/<<safeAppName>>/$safeAppName/g" ../templates/upstart/unicorn.conf > /etc/init/unicorn.conf
+      sed -e "s/<<safeAppName>>/$safeAppName/g;s/<<environment>>/$railsEnv/g" ../templates/upstart/unicorn.conf > /etc/init/unicorn.conf
     fi
   done
 
@@ -86,13 +93,6 @@ if (whiptail --title "PiSetup" --yesno "Setup Logrotate for all log files in /ww
   sed -e "s/<<safeAppName>>/$safeAppName/g" ../templates/logrotate.conf> /etc/logrotate.d/$safeAppName.conf
 fi
 
-
-railsEnv=$(whiptail --title "PiSetup" --notags --menu "What RAILS_ENV and RACK_ENV?" 20 60 4 production "production" staging "Staging" development "development" '' "none" 3>&1 1>&2 2>&3)
-
-if [[ $railsEnv != "" ]]; then
-  echo "RAILS_ENV=$railsEnv" | sudo tee -a /etc/environment
-  echo "RACK_ENV=$railsEnv" | sudo tee -a /etc/environment
-fi
 
 #TODO: Prompt for URL to clone from? Maybe just github username/repo.git
   # Clone
