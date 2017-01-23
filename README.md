@@ -71,19 +71,19 @@ Clone this repository into your home directory
     git clone https://github.com/mcfadden/PiSetup.git ~/PiSetup
 
 
-Pick a script, and run it. At this time, these scripts are available:
+### Usage
+
+Run the setup script and select which items you wish to install
+
+    sudo ~/PiSetup/setup.sh
+
+At this time, these items are available:
 
 - [ruby](#ruby)
 - [PostgreSQL](#postgresql)
 - [NGINX](#nginx)
 - [Upstart](#upstart)
 - [wiringPi](#wiringpi)
-
-To run an install script:
-
-    ~/PiSetup/scripts/<script>.sh
-    # Example
-    ~/PiSetup/scripts/ruby.sh
 
 
 ## Scripts
