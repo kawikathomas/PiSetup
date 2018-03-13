@@ -41,7 +41,7 @@ These instructions are for macOS. Installation instructions are available [on th
 5. `sudo raspi-config` Perform these actions in raspi-config:
   * Expand Filesystem
   * Change User Password
-  * Internationalization Options
+  * Localisation Options
     * Change Locale
       * Select `en_US.UTF-8 UTF-8` and Deselect `en_GB.UTF-8 UTF-8` (space toggles)
       * Set the default to `en_US.UTF-8` when prompted
@@ -82,7 +82,6 @@ At this time, these items are available:
 - [ruby](#ruby)
 - [PostgreSQL](#postgresql)
 - [NGINX](#nginx)
-- [Upstart](#upstart)
 - [wiringPi](#wiringpi)
 
 
@@ -116,13 +115,6 @@ It also creates a user `root` with no password. You can set up a password for th
 
 Installs and starts NGINX. You will need to configure it for your needs.
 
-
-### Upstart
-
-**`upstart.sh`**
-
-Installs Upstart. You will need to reboot for Upstart to take effect.
-
 ### WiringPi
 
 **`wiringPi.sh`**
@@ -130,3 +122,9 @@ Installs Upstart. You will need to reboot for Upstart to take effect.
 [WiringPi](http://wiringpi.com) is a GPIO access library for the Raspberry Pi. It includes a command line utility `gpio`.
 
 See [http://wiringpi.com](http://wiringpi.com) for usage instructions.
+
+
+
+
+### Todo:
+* Redis

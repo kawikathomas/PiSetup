@@ -10,7 +10,6 @@ choices=$(whiptail --title "PiSetup" --notags --checklist "Select the items you 
   psql.sh "PostgreSQL" off \
   wiringPi.sh "WiringPi" off \
   nginx.sh "NGINX" off \
-  upstart.sh "Upstart" off \
   rails_misc.sh "Rails Misc (see README)" off \
   3>&1 1>&2 2>&3)
 

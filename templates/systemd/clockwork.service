@@ -16,7 +16,7 @@ Environment=RAILS_ENV=<<environment>>
 Environment=RACK_ENV=<<environment>>
 
 # Specify the path to the directory of your clockwork file
-WorkingDirectory=/www/<<safeAppName>>/current
+WorkingDirectory=/www/<<safeAppName>>
 ExecStart=/usr/local/bin/bundle exec clockwork clock.rb
 
 Restart=always

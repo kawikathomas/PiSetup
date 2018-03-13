@@ -6,7 +6,7 @@ After=syslog.target network.target
 
 [Service]
 Type=simple
-WorkingDirectory=/www/<<safeAppName>>/current
+WorkingDirectory=/www/<<safeAppName>>
 # If you use rbenv:
 # ExecStart=/bin/bash -lc 'bundle exec sidekiq -e <<environment>>'
 # If you use the system's ruby:

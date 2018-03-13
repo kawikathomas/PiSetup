@@ -13,7 +13,7 @@ Type=simple
 User=pi
 
 # Specify the path to your puma application root
-WorkingDirectory=/www/<<safeAppName>>/current
+WorkingDirectory=/www/<<safeAppName>>
 
 # Helpful for debugging socket activation, etc.
 Environment=RAILS_ENV=<<environment>>
@@ -28,7 +28,7 @@ Environment=RACK_ENV=<<environment>>
 
 # Alternatively with a config file (in WorkingDirectory) and
 # comparable `bind` directives
-ExecStart=/usr/local/bin/bundle exec puma -C /www/<<safeAppName>>/current/config/puma.rb
+ExecStart=/usr/local/bin/bundle exec puma -C /www/<<safeAppName>>/config/puma.rb
 
 Restart=always
 

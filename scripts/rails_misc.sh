@@ -25,54 +25,50 @@ fi
 currentUser=$(logname)
 
 # Create the directory structure for the app:
-# /www/safeAppName/current
+# /www/safeAppName
 sudo mkdir /www
 sudo chown $currentUser:$currentUser /www
 sudo -i -u $currentUser mkdir /www/$safeAppName
-sudo -i -u $currentUser mkdir /www/$safeAppName/current
 
-webServer=$(whiptail --title "PiSetup" --notags --menu "What webserver will you use for $appName?\n\nWe use this to configure Upstart and Nginx (if installed)" 20 60 4 puma "Puma" unicorn "Unicorn" none "Other / None" 3>&1 1>&2 2>&3)
+webServer=$(whiptail --title "PiSetup" --notags --menu "What webserver will you use for $appName?\n\nWe use this to configure systemd and Nginx (if installed)" 20 60 4 puma "Puma" unicorn "Unicorn" none "Other / None" 3>&1 1>&2 2>&3)
 
-if which initctl > /dev/null; then
-  # Upstart is installed!
-
-  if [[ $webServer = "puma" ]]; then
-    webserverUpstart="puma Puma off"
-  elif [[ $webServer = "unicorn" ]]; then
-    webserverUpstart="unicorn Unicorn off"
-  fi
-
-  upstartChoices=$(whiptail --title "PiSetup" --notags --checklist "Which Upstart scripts should we setup?" 20 60 4 \
-    sidekiq "Sidekiq" off \
-    clockwork "Clockwork" off \
-    ${webserverUpstart} \
-    3>&1 1>&2 2>&3)
-
-
-  for choice in $upstartChoices; do
-    # Remove the quotes that whiptail gives us:
-    temp="${choice%\"}"
-    choice="${temp#\"}"
-
-    if [[ $choice = "sidekiq" ]]; then
-      echo "Setting up sidekiq Upstart script"
-      sed -e "s/<<safeAppName>>/$safeAppName/g;s/<<environment>>/$railsEnv/g" ${DIR}/../templates/upstart/sidekiq.conf > /etc/init/sidekiq.conf
-    elif [[ $choice = "clockwork" ]]; then
-      echo "Setting up clockwork Upstart script"
-      sed -e "s/<<safeAppName>>/$safeAppName/g;s/<<environment>>/$railsEnv/g" ${DIR}/../templates/upstart/clockwork.conf > /etc/init/clockwork.conf
-    elif [[ $choice = "puma" ]]; then
-      echo "Setting up puma Upstart script"
-      sed -e "s/<<safeAppName>>/$safeAppName/g;s/<<environment>>/$railsEnv/g" ${DIR}/../templates/upstart/puma.conf > /etc/init/puma.conf
-    elif [[ $choice = "unicorn" ]]; then
-      echo "Setting up unicorn Upstart script"
-      sed -e "s/<<safeAppName>>/$safeAppName/g;s/<<environment>>/$railsEnv/g" ${DIR}/../templates/upstart/unicorn.conf > /etc/init/unicorn.conf
-    fi
-  done
-
-    # Output the path to the files we create and tell user to review them
-else
-  whiptail --title "PiSetup" --msgbox "Unable to configure Upstart scripts: Upstart not detected." 10 40
+if [[ $webServer = "puma" ]]; then
+  webserverSystemd="puma Puma off"
+elif [[ $webServer = "unicorn" ]]; then
+  webserverSystemd="unicorn Unicorn off"
 fi
+
+systemdChoices=$(whiptail --title "PiSetup" --notags --checklist "Which systemd scripts should we setup?" 20 60 4 \
+  sidekiq "Sidekiq" off \
+  clockwork "Clockwork" off \
+  ${webserverSystemd} \
+  3>&1 1>&2 2>&3)
+
+
+for choice in $systemdChoices; do
+  # Remove the quotes that whiptail gives us:
+  temp="${choice%\"}"
+  choice="${temp#\"}"
+
+  if [[ $choice = "sidekiq" ]]; then
+    echo "Setting up sidekiq systemd script"
+    sed -e "s/<<safeAppName>>/$safeAppName/g;s/<<environment>>/$railsEnv/g" ${DIR}/../templates/systemd/sidekiq.service > /lib/systemd/system/sidekiq.service
+    echo "Created /lib/systemd/system/sidekiq.service"
+  elif [[ $choice = "clockwork" ]]; then
+    echo "Setting up clockwork systemd script"
+    sed -e "s/<<safeAppName>>/$safeAppName/g;s/<<environment>>/$railsEnv/g" ${DIR}/../templates/systemd/clockwork.service > /lib/systemd/system/clockwork.service
+    echo "Created /lib/systemd/system/clockwork.service"
+  elif [[ $choice = "puma" ]]; then
+    echo "Setting up puma systemd script"
+    sed -e "s/<<safeAppName>>/$safeAppName/g;s/<<environment>>/$railsEnv/g" ${DIR}/../templates/systemd/puma.service > /lib/systemd/system/puma.service
+    echo "Created /lib/systemd/system/puma.service"
+  elif [[ $choice = "unicorn" ]]; then
+    echo "Setting up unicorn systemd script"
+    sed -e "s/<<safeAppName>>/$safeAppName/g;s/<<environment>>/$railsEnv/g" ${DIR}/../templates/systemd/unicorn.service > /lib/systemd/system/unicorn.service
+    echo "Created /lib/systemd/system/unicorn.service"
+  fi
+done
+echo "Review the systemd configurations created above, and then enable them with (ex:) 'systemctl enable service.service'"
 
 if which nginx > /dev/null; then
   # Nginx is installed!
@@ -100,7 +96,7 @@ for gem in $gemChoices; do
 done
 
 
-if (whiptail --title "PiSetup" --yesno "Setup Logrotate for all log files in /www/$safeAppName/current/log ?" 10 60); then
+if (whiptail --title "PiSetup" --yesno "Setup Logrotate for all log files in /www/$safeAppName/log ?" 10 60); then
   sed -e "s/<<safeAppName>>/$safeAppName/g" ${DIR}/../templates/logrotate.conf> /etc/logrotate.d/$safeAppName.conf
 fi
 
@@ -109,9 +105,6 @@ fi
   # Clone
   # Run bundle install
   # prompt to run `bundle exec rake db:create && bundle exec rake db:migrate`
-
-#TODO: Prompt to cleanup "current" folder if you'll be deploying with capistrano
-# If yes to capistrano, output the IP address of this device.
 
 
 if (whiptail --title "PiSetup" --yesno "Reboot Raspberry Pi? (Recommended)" 10 60); then
