@@ -92,7 +92,7 @@ for gem in $gemChoices; do
   temp="${gem%\"}"
   temp="${temp#\"}"
 
-  sudo -i -u $currentUser gem install $temp
+  sudo gem install $temp
 done
 
 
