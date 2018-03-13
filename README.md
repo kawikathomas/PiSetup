@@ -28,8 +28,9 @@ These instructions are for macOS. Installation instructions are available [on th
 6. `sudo dd bs=1m if=2016-09-23-raspbian-jessie-lite.img of=/dev/rdisk5`
 7. Enter your password when prompted (due to the `sudo`)
 8. Wait - It took 1 minute and 19 seconds for me.
-9. `diskutil eject /dev/disk5`
-10. Remove your SD Card from you laptop and insert in your Raspberry Pi
+9. Add an empty file named 'ssh' to the boot partition: `touch /Volumes/boot/ssh`
+10. `diskutil eject /dev/disk5`
+11. Remove your SD Card from you laptop and insert in your Raspberry Pi
 
 ### Update and Configure Pi
 
@@ -40,7 +41,7 @@ These instructions are for macOS. Installation instructions are available [on th
 5. `sudo raspi-config` Perform these actions in raspi-config:
   * Expand Filesystem
   * Change User Password
-  * Internationalization Options
+  * Localisation Options
     * Change Locale
       * Select `en_US.UTF-8 UTF-8` and Deselect `en_GB.UTF-8 UTF-8` (space toggles)
       * Set the default to `en_US.UTF-8` when prompted
@@ -70,19 +71,18 @@ Clone this repository into your home directory
     git clone https://github.com/mcfadden/PiSetup.git ~/PiSetup
 
 
-Pick a script, and run it. At this time, these scripts are available:
+### Usage
+
+Run the setup script and select which items you wish to install
+
+    sudo ~/PiSetup/setup.sh
+
+At this time, these items are available:
 
 - [ruby](#ruby)
 - [PostgreSQL](#postgresql)
 - [NGINX](#nginx)
-- [Upstart](#upstart)
 - [wiringPi](#wiringpi)
-
-To run an install script:
-
-    ~/PiSetup/scripts/<script>.sh
-    # Example
-    ~/PiSetup/scripts/ruby.sh
 
 
 ## Scripts
@@ -115,13 +115,6 @@ It also creates a user `root` with no password. You can set up a password for th
 
 Installs and starts NGINX. You will need to configure it for your needs.
 
-
-### Upstart
-
-**`upstart.sh`**
-
-Installs Upstart. You will need to reboot for Upstart to take effect.
-
 ### WiringPi
 
 **`wiringPi.sh`**
@@ -129,3 +122,9 @@ Installs Upstart. You will need to reboot for Upstart to take effect.
 [WiringPi](http://wiringpi.com) is a GPIO access library for the Raspberry Pi. It includes a command line utility `gpio`.
 
 See [http://wiringpi.com](http://wiringpi.com) for usage instructions.
+
+
+
+
+### Todo:
+* Redis
