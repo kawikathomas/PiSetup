@@ -39,15 +39,17 @@ These instructions are for macOS. Installation instructions are available [on th
 3. SSH into your Pi with `ssh pi@192.168.12.206`  (default password is `raspberry`)
 4. `sudo apt-get update && sudo apt-get upgrade -y`
 5. `sudo raspi-config` Perform these actions in raspi-config:
-  * Expand Filesystem
+
   * Change User Password
+  * Network Options
+    * Hostname
   * Localisation Options
     * Change Locale
       * Select `en_US.UTF-8 UTF-8` and Deselect `en_GB.UTF-8 UTF-8` (space toggles)
       * Set the default to `en_US.UTF-8` when prompted
     * Change Timezone
-  * Advanced
-    * Hostname
+  * Advanced Options
+    * Expand Filesystem
   * Finish
     * select `Yes` to reboot the Pi when prompted
 
