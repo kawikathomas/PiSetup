@@ -12,7 +12,7 @@ If you already have a working Pi and just want to use the Setup Scripts, jump to
 
 #### Obtain the latest version of Raspbian
 
-Visit the [Raspbian Download Page](https://www.raspberrypi.org/downloads/raspbian/) and download the latest version. I recommend **Jessie Lite** and using the torrent to download it.
+Visit the [Raspbian Download Page](https://www.raspberrypi.org/downloads/raspbian/) and download the latest version. I recommend **Stretch Lite** and using the torrent to download it.
 
 After the download has completed extract the archive
 
