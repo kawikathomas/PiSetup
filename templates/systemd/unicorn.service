@@ -21,7 +21,7 @@ Environment=RACK_ENV=<<environment>>
 
 # The command to start Unicorn with a config file (in WorkingDirectory) and
 # comparable `bind` directives
-ExecStart=/usr/local/bin/bundle exec unicorn_rails -c /www/<<safeAppName>>/config/unicorn.rb -E <<environment>> -D
+ExecStart=/usr/local/bin/bundle exec unicorn_rails -c /www/<<safeAppName>>/config/unicorn.rb -E <<environment>>
 
 Restart=always
 
